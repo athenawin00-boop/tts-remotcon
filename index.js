@@ -408,7 +408,6 @@ function makeDraggable(selector, handleSelector, lsKey) {
         startY = e.clientY;
         baseX = rect.left;
         baseY = rect.top;
-        try { handle.setPointerCapture(pid); } catch { /* capture 실패해도 move 는 받는다 */ }
     });
 
     handle.addEventListener('pointermove', (e) => {
@@ -419,6 +418,8 @@ function makeDraggable(selector, handleSelector, lsKey) {
             if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
             dragging = true;
             root.classList.add('ttsr-dragging');
+            // capture only after the drag threshold: capturing on pointerdown retargets the click to the handle, so child buttons (close/pin/bar) never get it
+            try { handle.setPointerCapture(pid); } catch { /* ignore */ }
         }
         e.preventDefault();
         const rect = root.getBoundingClientRect();
