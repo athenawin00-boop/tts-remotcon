@@ -76,7 +76,7 @@ function clampPosition(pos, size, viewport, margin) {
 /**
  * 표시 방식 상태 전이.
  * @param {{mode:string, cardOpen:boolean}} state
- * @param {string} action - 'wandClick' | 'close' | 'barExpand' | 'togglePin'
+ * @param {string} action - 'wandClick' | 'close' | 'collapse' | 'barExpand' | 'togglePin'
  * @returns {{mode:string, cardOpen:boolean}}
  */
 function nextDisplayState(state, action) {
@@ -84,6 +84,10 @@ function nextDisplayState(state, action) {
     const cardOpen = !!state.cardOpen;
 
     if (action === 'close') {
+        // X = fully off in every mode; also drops 'always' so a reload shows nothing
+        return { mode: 'wand', cardOpen: false };
+    }
+    if (action === 'collapse') {
         return { mode, cardOpen: false };
     }
     if (action === 'togglePin') {
@@ -238,6 +242,7 @@ function buildCard() {
             </label>
             <span class="ttsr-spacer"></span>
             <div id="ttsr_pin" class="ttsr-iconbtn" role="button" tabindex="0" title="표시 방식 전환">📌</div>
+            <div id="ttsr_collapse" class="ttsr-iconbtn" role="button" tabindex="0" title="바로 접기" style="display:none;">▴</div>
             <div id="ttsr_close" class="ttsr-iconbtn" role="button" tabindex="0" title="닫기">✕</div>
         </div>
         <div class="ttsr-body">
@@ -321,6 +326,7 @@ function applyDisplayState() {
     const vis = visibilityFor(state);
 
     $('#ttsr_card').toggle(vis.card);
+    $('#ttsr_collapse').toggle(state.mode === 'always');
     $('#ttsr_bar').toggle(vis.bar);
 
     if (vis.card) {
@@ -582,6 +588,7 @@ function bindRemoteHandlers() {
     });
     $('#ttsr_pin').on('click', () => transition('togglePin'));
     $('#ttsr_close').on('click', () => transition('close'));
+    $('#ttsr_collapse').on('click', () => transition('collapse'));
 
     // 재생 줄
     $('#ttsr_play').on('click', () => {

@@ -75,7 +75,10 @@ check('wand + 바펼침 = 변화없음', L.nextDisplayState(W_CLOSED, 'barExpand
 check('always+바 + 요술봉클릭 = 펼침', L.nextDisplayState(A_BAR, 'wandClick'), A_OPEN);
 check('always+열림 + 요술봉클릭 = 접힘', L.nextDisplayState(A_OPEN, 'wandClick'), A_BAR);
 check('always+바 + 바펼침 = 펼침', L.nextDisplayState(A_BAR, 'barExpand'), A_OPEN);
-check('always+열림 + X = 바로 복귀', L.nextDisplayState(A_OPEN, 'close'), A_BAR);
+check('always+열림 + X = 완전히 꺼짐(요술봉모드로)', L.nextDisplayState(A_OPEN, 'close'), W_CLOSED);
+check('always+바 + X = 완전히 꺼짐', L.nextDisplayState(A_BAR, 'close'), W_CLOSED);
+check('always+열림 + 접기 = 바로 복귀', L.nextDisplayState(A_OPEN, 'collapse'), A_BAR);
+check('wand+열림 + 접기 = 닫힘', L.nextDisplayState(W_OPEN, 'collapse'), W_CLOSED);
 check('always + 핀 = 요술봉모드 + 카드 유지', L.nextDisplayState(A_OPEN, 'togglePin'), W_OPEN);
 check('알 수 없는 액션은 무변화', L.nextDisplayState(A_OPEN, 'nope'), A_OPEN);
 check('망가진 mode 는 wand 로 정규화', L.nextDisplayState({ mode: 'zzz', cardOpen: true }, 'close'), W_CLOSED);
