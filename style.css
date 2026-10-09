@@ -1,0 +1,327 @@
+/*
+ * TTS 리모컨 - 떠 있는 카드 / 접힌 바
+ * 색은 전부 ST 테마 변수만 쓴다 (public/style.css:71-82 정의).
+ * ST 가 표시를 제어하는 컨테이너의 display 는 건드리지 않는다.
+ */
+
+#ttsr_card,
+#ttsr_bar {
+    position: fixed;
+    z-index: 3000;
+    color: var(--SmartThemeBodyColor);
+    background-color: var(--SmartThemeBlurTintColor);
+    backdrop-filter: blur(var(--SmartThemeBlurStrength));
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px var(--SmartThemeShadowColor);
+    font-size: calc(var(--mainFontSize) * 0.95);
+    user-select: none;
+    touch-action: none;
+}
+
+#ttsr_card {
+    width: 300px;
+    max-width: calc(100vw - 16px);
+    padding: 8px 10px 10px;
+}
+
+#ttsr_card.ttsr-dragging,
+#ttsr_bar.ttsr-dragging {
+    opacity: 0.85;
+}
+
+/* ── 머리줄 ───────────────────────────── */
+
+.ttsr-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: grab;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--SmartThemeBorderColor);
+}
+
+.ttsr-head:active {
+    cursor: grabbing;
+}
+
+.ttsr-title {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.ttsr-spacer {
+    flex: 1;
+}
+
+.ttsr-iconbtn {
+    cursor: pointer;
+    opacity: 0.75;
+    padding: 2px 4px;
+    border-radius: 6px;
+    line-height: 1;
+}
+
+.ttsr-iconbtn:hover {
+    opacity: 1;
+    background-color: var(--white20a);
+}
+
+/* 켜기/끄기 스위치 */
+
+.ttsr-switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+    flex: 0 0 auto;
+    cursor: pointer;
+}
+
+.ttsr-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.ttsr-knob {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    background-color: var(--black50a);
+    transition: background-color 0.15s ease;
+    pointer-events: none;
+}
+
+.ttsr-knob::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--SmartThemeBodyColor);
+    transition: transform 0.15s ease;
+}
+
+.ttsr-switch input:checked+.ttsr-knob {
+    background-color: var(--SmartThemeQuoteColor);
+}
+
+.ttsr-switch input:checked+.ttsr-knob::after {
+    transform: translateX(16px);
+}
+
+.ttsr-switch input:disabled+.ttsr-knob {
+    opacity: 0.4;
+}
+
+/* ── 본문 ─────────────────────────────── */
+
+.ttsr-body {
+    padding-top: 8px;
+}
+
+.ttsr-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ttsr-main.ttsr-locked {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.ttsr-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ttsr-label {
+    color: var(--SmartThemeEmColor);
+    font-size: calc(var(--mainFontSize) * 0.8);
+    white-space: nowrap;
+}
+
+.ttsr-fixed {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ttsr-provider {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.ttsr-provider b {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ttsr-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 7px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.ttsr-btn:hover {
+    background-color: var(--white20a);
+}
+
+.ttsr-grow {
+    flex: 1;
+    min-width: 0;
+}
+
+.ttsr-grow span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 목소리 줄 */
+
+.ttsr-voicerow {
+    gap: 8px;
+}
+
+.ttsr-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.ttsr-field select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* 읽기 옵션 알약 */
+
+.ttsr-pills {
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.ttsr-pill {
+    padding: 3px 9px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: calc(var(--mainFontSize) * 0.82);
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
+.ttsr-pill:hover {
+    opacity: 0.9;
+}
+
+.ttsr-pill.ttsr-on {
+    opacity: 1;
+    border-color: var(--SmartThemeQuoteColor);
+    color: var(--SmartThemeQuoteColor);
+}
+
+.ttsr-pill.ttsr-missing {
+    display: none;
+}
+
+/* 속도 */
+
+.ttsr-raterow input[type="range"] {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 안내 */
+
+.ttsr-notice {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    padding-bottom: 8px;
+}
+
+.ttsr-notice-text {
+    color: var(--SmartThemeEmColor);
+}
+
+/* ── 접힌 바 ──────────────────────────── */
+
+#ttsr_bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 5px;
+    cursor: grab;
+}
+
+#ttsr_bar:active {
+    cursor: grabbing;
+}
+
+.ttsr-bar-btn {
+    padding: 4px 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.6;
+    line-height: 1;
+}
+
+.ttsr-bar-btn:hover {
+    background-color: var(--white20a);
+    opacity: 1;
+}
+
+.ttsr-bar-btn.ttsr-on {
+    opacity: 1;
+    color: var(--SmartThemeQuoteColor);
+}
+
+/* ── 모바일: 하단 시트 (ST 브레이크포인트 style.css:2505 와 동일) ── */
+
+@media screen and (max-width: 1000px) {
+
+    #ttsr_card {
+        left: 0 !important;
+        top: auto !important;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px 12px 0 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        padding-bottom: 14px;
+    }
+
+    #ttsr_card .ttsr-head {
+        cursor: default;
+    }
+
+    .ttsr-voicerow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
