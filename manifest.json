@@ -6,8 +6,8 @@
     "dependencies": [],
     "js": "index.js",
     "css": "style.css",
-    "author": "jason",
+    "author": "Hyeon",
     "version": "1.0.0",
-    "homePage": "",
+    "homePage": "https://github.com/athenawin00-boop/tts-remotcon",
     "auto_update": false
 }

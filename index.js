@@ -1,5 +1,5 @@
 /**
- * TTS 리모컨 (tts-remote)
+ * TTS 리모컨 (tts-remotcon)
  *
  * ST 내장 TTS 확장 위에 얹는 리모컨. 설정값을 직접 쓰지 않고, TTS 확장 탭의
  * 원래 컨트롤을 대신 조작한다(native click / val+trigger). 저장·검증·voicemap
@@ -738,7 +738,7 @@ jQuery(async () => {
     applyDisplayState();
     waitAndAttach();
 
-    console.log('[tts-remote] 리모컨 준비됨. 표시 방식:', getSettings().displayMode);
+    console.log('[tts-remotcon] 리모컨 준비됨. 표시 방식:', getSettings().displayMode);
 });
 
 //#endregion
