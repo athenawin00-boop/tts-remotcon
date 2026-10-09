@@ -246,7 +246,7 @@ function buildCard() {
                 <div id="ttsr_open_settings" class="ttsr-btn" role="button" tabindex="0">확장 탭 열기</div>
             </div>
             <div id="ttsr_main" class="ttsr-main">
-                <div class="ttsr-provider"><span class="ttsr-label">공급자</span><b id="ttsr_provider_name">—</b></div>
+                <div class="ttsr-provider"><span class="ttsr-label">공급자</span><b id="ttsr_provider_name">—</b><div id="ttsr_provider_settings" class="ttsr-iconbtn" role="button" tabindex="0" title="TTS 설정 열기"><i class="fa-solid fa-gear"></i></div></div>
                 <div class="ttsr-row">
                     <div id="ttsr_play" class="ttsr-btn ttsr-grow" role="button" tabindex="0">
                         <i id="ttsr_play_icon" class="fa-solid fa-circle-play"></i>
@@ -630,6 +630,7 @@ function bindRemoteHandlers() {
 
     // 안내 → 확장 탭 열기
     $('#ttsr_open_settings').on('click', openTtsSettingsPanel);
+    $('#ttsr_provider_settings').on('click', openTtsSettingsPanel);
 
     // 접힌 바
     $('#ttsr_bar_power').on('click', () => {
