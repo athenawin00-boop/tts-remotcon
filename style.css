@@ -304,9 +304,17 @@
 @media screen and (max-width: 1000px) {
 
     #ttsr_card {
+        /* mobile: ST puts a transform on html while body is fixed, so html is 0px tall and
+           becomes the fixed containing block - bottom:0 lands at the screen top.
+           Anchor to the viewport bottom with viewport units instead. */
         left: 0 !important;
-        top: auto !important;
-        bottom: 0;
+        top: 100vh !important;
+        top: 100dvh !important;
+        bottom: auto;
+        transform: translateY(-100%);
+        max-height: 85vh;
+        max-height: 85dvh;
+        overflow-y: auto;
         width: 100%;
         max-width: 100%;
         border-radius: 12px 12px 0 0;
